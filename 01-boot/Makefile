@@ -1,20 +1,13 @@
-all: Image
+all: boot.bin
 
-.PHONY=clean run-qemu
+.PHONY=clean run
 
-run-qemu: Image
-	@qemu-system-i386 -boot a -fda Image
+run: boot.bin
+	@qemu-system-i386 -boot a -fda boot.bin
 
-boot.o: boot.asm
-	as --32 bootsect.s  -o bootsect.o
+boot.bin: boot.asm
+	nasm boot.asm -o boot.bin
 
-boot: boot.o ld-bootsect.ld
-	ld -T ld-bootsect.ld bootsect.o -o bootsect
-	objcopy -O binary -j .text bootsect       
-
-Image: boot
-	dd if=boot of=Image bs=512 count=1
-	@echo "Image created"
 
 clean: 
 	rm -f *.o boot
