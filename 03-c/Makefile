@@ -12,7 +12,7 @@ loader.bin: loader.asm
 	nasm loader.asm -o loader.bin
 
 kernel_main.elf.o: kernel_main.c
-	gcc -o kernel_main.elf.o -c kernel_main.c
+	gcc -m32 -o kernel_main.elf.o -c kernel_main.c
 
 kernel.elf.o: kernel.asm
 	nasm -f elf32 -o kernel.elf.o kernel.asm
