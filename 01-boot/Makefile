@@ -10,7 +10,7 @@ boot.bin: boot.asm
 
 
 clean: 
-	rm -f *.o boot
+	rm -f *.bin
 
 
 

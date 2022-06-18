@@ -3,7 +3,7 @@ all: Image
 .PHONY=clean run
 
 run: Image
-	@qemu-system-i386 -boot a -fda boot.bin
+	@qemu-system-i386 -boot a -fda Image
 
 boot.bin: boot.asm
 	nasm boot.asm -o boot.bin
@@ -18,7 +18,7 @@ Image: boot.bin kernel.bin
 
 
 clean: 
-	rm -f *.o boot
+	rm -f *.bin Image
 
 
 
