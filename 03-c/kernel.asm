@@ -1,5 +1,3 @@
-SECTION LOADER VSTART=0x900
-
 EXTERN DisplayC    ; import c function
 [BITS 16]
 [SECTION .TEXT]
