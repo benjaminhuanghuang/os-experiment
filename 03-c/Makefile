@@ -18,8 +18,8 @@ kernel.elf.o: kernel.asm
 	nasm -f elf32 -o kernel.elf.o kernel.asm
 	
 kernel.bin: kernel_main.elf.o kernel.elf.o
-	ld -m elf_i386 -Ttext 0x1500 kernel.elf.o kernel_main.elf.o -o kernel.elf
-	objcopy -O binary kernel.elf kernel.bin 		
+	ld -m elf_i386 -Ttext 0x1500 kernel.elf.o kernel_main.elf.o #-o kernel.elf
+	objcopy -O binary a.out kernel.bin 		
 
 Image: boot.bin loader.bin kernel.bin
 	dd if=boot.bin of=Image bs=512 count=1
