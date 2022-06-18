@@ -13,8 +13,8 @@ PrintASM:
   MOV AX, 0XB800        	;显存位置
   MOV ES, AX
 
-  MOV BYTE[ES: 0X00], 'O'
+  MOV BYTE[ES: 0X00], 'K'
   MOV BYTE[ES: 0X01], 0x24
-  MOV BYTE[ES: 0X02], 'K'
+  MOV BYTE[ES: 0X02], 'O'
   MOV BYTE[ES: 0X03], 0X41
   RET
