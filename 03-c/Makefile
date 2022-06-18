@@ -18,7 +18,7 @@ kernel.elf.o: kernel.asm
 	nasm -f elf32 -o kernel.elf.o kernel.asm
 	
 kernel.bin: kernel_main.elf.o kernel.elf.o
-	ld -Ttext 0x900 kernel.elf.o kernel_main.elf.o
+	ld -Ttext 0x1500 kernel.elf.o kernel_main.elf.o -o kernel.elf
 	objcoyp -O binary kernel.elf kernel.bin 		
 
 Image: boot.bin kernel.bin
