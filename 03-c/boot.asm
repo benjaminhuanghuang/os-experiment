@@ -34,7 +34,7 @@ MOV BYTE [GS: 0X07], 0XA4
 MOV BYTE [GS: 0X08], 'R'
 MOV BYTE [GS: 0X09], 0XA4
 
-load_kernel:
+load_section:
   mov DX, 0       ; DH:head, DL:driver
   mov CX, 2       ; read section 2
   mov AX, 0       ; read kernel to ES:BX (0x900)
@@ -44,10 +44,10 @@ load_kernel:
   mov AL, 4       ; read 1 sections from the disk
   int 0x13
 
-  jnc kernel_load_ok  ; check CF
-  jmp load_kernel
+  jnc load_section_ok  ; check CF
+  jmp load_section
 
-kernel_load_ok:
+load_section_ok:
   jmp 0x900    ; execute the kernel
 
 
