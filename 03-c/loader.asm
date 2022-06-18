@@ -15,7 +15,7 @@ KERNEL_START_SECTOR EQU 0X9;kernel从第9个扇区开始读
 load_kernel:
   mov DX, 0       ; DH:head, DL:driver
   mov CX, 2       ; read section 3
-  mov AX, 0       ; read kernel to ES:BX (0x900)
+  mov AX, 0       ; read kernel to ES:BX (0x1500)
   mov ES, AX
   mov BX, 0x900
   mov AH, 0x02    ; read
