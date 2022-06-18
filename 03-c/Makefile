@@ -21,7 +21,7 @@ kernel.bin: kernel_main.elf.o kernel.elf.o
 	ld -m elf_i386 -Ttext 0x1500 kernel.elf.o kernel_main.elf.o -o kernel.elf
 	objcopy -O binary kernel.elf kernel.bin 		
 
-Image: boot.bin kernel.bin
+Image: boot.bin loader.bin kernel.bin
 	dd if=boot.bin of=Image bs=512 count=1
 	dd if=loader.bin of=Image bs=512 count=1 seek=1
 	dd if=kernel.bin of=Image bs=512 count=1 seek=2
@@ -29,7 +29,7 @@ Image: boot.bin kernel.bin
 
 
 clean: 
-	rm -f *.bin Image
+	rm -f *.bin *.o Image
 
 
 
