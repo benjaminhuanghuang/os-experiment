@@ -18,7 +18,7 @@ kernel.elf: kernel_c.elf.o kernel.elf.o
 	ld -m elf_i386 -Ttext 0x900 kernel.elf.o kernel_c.elf.o -o kernel.elf
 
 kernel.bin: kernel.elf
-	objcopy -O binary kernel.elf kernel.bin  
+	objcopy -O binary -j .text kernel.elf kernel.bin  
 
 Image: boot.bin kernel.bin
 	dd if=boot.bin of=Image bs=512 count=1
