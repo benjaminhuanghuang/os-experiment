@@ -49,7 +49,5 @@ kernel_load_ok:
   jmp 0x900    ; execute the kernel
 
 
-
-
 TIMES 510 - ($ - $$) DB 0
 DB 0X55, 0XAA
