@@ -1,7 +1,7 @@
 SECTION LOADER VSTART=0x900
 
 EXTERN DisplayC    ; import c function
-[BIT 16]
+[BITS 16]
 [SECTION .TEXT]
 
 GLOABAL _start
