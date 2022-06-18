@@ -1,8 +1,6 @@
-void PrintASM();
-
-int DisplayC(){
-  PrintASM();
-
+void MYPRINT();
+int DISPLAY(){
+	MYPRINT();
 	while(1){
 	}
 }

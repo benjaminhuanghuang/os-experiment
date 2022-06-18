@@ -1,13 +1,18 @@
+# Link .c and .asm together
 
+1. 编译 .c 文件， 生成 32-bit elf 格式的obj文件
+```
+  gcc -m32 -o kernel_c.elf.o -c kernal_c.c
+```
+查看 kernel_c.elf.o
+```
+  file -h kernel_c.elf.o
 
+  kernel_c.elf.o: ELF 32-bit LSB relocatable, Intel 80386, version 1 (SYSV), not stripped
+```
 
-1. 编译 .c 文件， 生成 .elf 格式的obj文件
 ```
-  gcc -o kernel_main.elf.o -c kernal_main
-```
-查看 elf
-```
-  readelf -a kernel_main.elf.o
+  readelf -a kernel_c.elf.o
 ```
 
 2. 编译 .asm 文件
@@ -18,20 +23,20 @@
 
 3. 链接 asm 和 c 生成的 obj 文件
 ```
-  ld -j text 0x1500 kernel.elf.o kernel_mail.elf.o
+  ld -Ttext 0x900 kernel.elf.o kernel_c.elf.o -o kernel.elf
 
-  0x1500 为入口地址
+  0x900 为入口地址
 ```
 
-查看链接结果, 
+查看链接结果 kernel.elf
 ```
-  objdum kernel.out
+  objdump -D kernel.elf
 ```
 
 4. 提取 .text 段内容
 
 ```
-  objcoyp -O binary kernel.out kernel.bin 
+  objcoyp -O binary -j .text kernel.elf kernel.bin 
 ```
 
 查看结果 

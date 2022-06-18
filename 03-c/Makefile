@@ -13,19 +13,21 @@ kernel_c.elf.o: kernel_c.c
 
 kernel.elf.o: kernel.asm
 	nasm -f elf32 -o kernel.elf.o kernel.asm
-	
-kernel.bin: kernel_c.elf.o kernel.elf.o
-	ld -m elf_i386 -Ttext 0x900 kernel.elf.o kernel_c.elf.o -o kernel.bin
-	objcopy -O binary -j .text kernel.bin 		
 
-Image: boot.bin loader.bin kernel.bin
+kernel.elf: kernel_c.elf.o kernel.elf.o
+	ld -m elf_i386 -Ttext 0x900 kernel.elf.o kernel_c.elf.o -o kernel.elf
+
+kernel.bin: kernel.elf
+	objcopy -O binary kernel.elf kernel.bin  
+
+Image: boot.bin kernel.bin
 	dd if=boot.bin of=Image bs=512 count=1
 	dd if=kernel.bin of=Image bs=512 count=1 seek=1
 	@echo "Image created"	
 
 
 clean: 
-	rm -f *.bin *.o Image
+	rm -f *.bin *.o *.elf Image
 
 
 
