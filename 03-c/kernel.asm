@@ -4,8 +4,8 @@ EXTERN DisplayC    ; import c function
 [BITS 16]
 [SECTION .TEXT]
 
-GLOABAL _start
-GLOABAL PrintASM
+GLOBAL _start
+GLOBAL PrintASM
 
 _start:
   CALL DisplayC
