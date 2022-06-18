@@ -9,13 +9,13 @@ boot.bin: boot.asm
 	nasm boot.asm -o boot.bin
 
 kernel_main.elf.o: kernel_main.c
-	gcc -o kernel.elf.o -c kernel_main.c
+	gcc -o kernel_main.elf.o -c kernel_main.c
 
 kernel.elf.o: kernel.asm
 	nasm -f elf32 -o kernel.elf.o kernel.asm
 
 kernel.bin: kernel_main.elf.o kernel.elf.o
-	ld -Ttext 0x1500 kernel.elf.o kernel_mail.elf.o
+	ld -Ttext 0x900 kernel.elf.o kernel_mail.elf.o
 	objcoyp -O binary kernel.elf kernel.bin 		
 
 Image: boot.bin kernel.bin

@@ -1,3 +1,5 @@
+ECTION LOADER VSTART=0x900
+
 EXTERN DIISPLAY    ; import c function
 [BIT 16]
 [SECTION .TEXT]
