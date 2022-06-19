@@ -1,7 +1,5 @@
-LOADER_BASE_ADDR EQU 0X900              ;加载第2个段的地址
-LOADER_START_SECTOR EQU 0X2             ;以LBA方式,loader存在第2个扇区,第一个是主引导扇区
-
 SECTION MBR VSTART=0X7C00    ;程序加载到0x7c00
+
 ;初始化寄存器
 MOV AX, CS
 MOV DS, AX
