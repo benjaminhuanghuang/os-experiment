@@ -9,7 +9,7 @@ boot.bin: boot.asm
 	nasm boot.asm -o boot.bin
 
 kernel.elf.o: kernel.asm
-	nasm -o kernel.elf.o kernel.asm
+	nasm -f elf -o kernel.elf.o kernel.asm
 
 kernel_c.elf.o: kernel_c.c
 	gcc -c kernel_c.c -o kernel_c.elf.o 

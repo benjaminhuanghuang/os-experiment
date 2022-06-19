@@ -3,6 +3,7 @@ extern DISPLAY; from C fun
 [section .text]
 global _start
 global myprint
+
 _start:
 	call DISPLAY ; asm call c function
 
