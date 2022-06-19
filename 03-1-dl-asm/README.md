@@ -28,13 +28,13 @@ check kernel.elf.o
 
 查看链接结果 kernel.elf
 ```
-  objdump -D kernel.elf
+  objdump -D kernel.elf.bin
 ```
 
-4. 提取 .text 段内容
+3. 提取 .text 段内容
 
 ```
-  objcoyp -O binary -j .text kernel.elf kernel.bin 
+  objcoyp -O binary -j .text kernel.elf.bin kernel.bin 
 ```
 
 查看结果 
@@ -43,4 +43,4 @@ check kernel.elf.o
 ```
 
 
-5. create Image
+4. create Image
