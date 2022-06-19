@@ -15,10 +15,7 @@ kernel.elf.o: kernel.asm
 	nasm -f elf32 -o kernel.elf.o kernel.asm
 
 kernel.elf: kernel_c.elf.o kernel.elf.o
-	#ld  -m elf_i386 -s -Ttext 0x900 kernel.elf.o kernel_c.elf.o -o kernel.elf
 	ld -m elf_i386 -T config.ld kernel.elf.o kernel_c.elf.o -o kernel.elf
-	#ld -m elf_i386 -Ttext 0x900 kernel.elf.o kernel_c.elf.o -o kernel.elf
-	#ld -T config.ld kernel.elf.o -o kernel.elf
 	
 kernel.bin: kernel.elf
 	objcopy -O binary -j .text kernel.elf kernel.bin  
