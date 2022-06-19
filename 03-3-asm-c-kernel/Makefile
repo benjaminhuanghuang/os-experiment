@@ -15,7 +15,7 @@ kernel_c.elf.o: kernel_c.c
 	gcc -c kernel_c.c -o kernel_c.elf.o 
 
 kernel.elf.bin: kernel_c.elf.o kernel.elf.o
-	ld -m elf_i386 -Ttext 0x900 kernel.elf.o kernel_c.elf.o -o kernel.elf.bin
+	ld -s -Ttext 0x900 kernel.elf.o kernel_c.elf.o -o kernel.elf.bin
 	
 kernel.bin: kernel.elf.bin
 	objcopy -O binary kernel.elf.bin kernel.bin  
