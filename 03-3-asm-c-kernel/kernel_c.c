@@ -2,6 +2,6 @@ void myprint();
 
 int DISPLAY(){
   myprint();
-  wile(1);
+  while(1);
 }
 
