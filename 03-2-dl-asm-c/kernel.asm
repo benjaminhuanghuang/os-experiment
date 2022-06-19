@@ -1,21 +1,30 @@
 EXTERN DISPLAY        	;FROM C
-[BITS 16]
-[SECTION .text]
+extern chooseNum  ; from C func
 
-GLOBAL _start
-GLOBAL MYPRINT
-
-start:
-  CALL DISPLAY          	;ASM CALL CALL  
+[section .data]
+num1 dd 10
+num2 dd 44
 
 
-MYPRINT:
-  MOV AX, 0XB800
-  MOV ES, AX
+[section .text]
+global _start
+global myprint
 
-  MOV BYTE [ES: 0X00], 'P'
-  MOV BYTE [ES: 0X01], 0x24
-  MOV BYTE [ES: 0X02], 'K'
-  MOV BYTE [ES: 0X03], 0X06
-  RET
+
+_start:
+  push num2
+  push num1
+  call chooseNum
+  add esp, 4
+  mov ebx, 0
+  mov eax, 1
+  int 0x80          ; sys_exit
+
+myprint:
+  mov edx, [esp + 8]
+  mov ecx, [esp + 4]
+  mov ebx, 1
+  mov eax, 4
+  int 0x80          ; sys_write
+  ret
   
