@@ -11,9 +11,9 @@ myprint:
   MOV AX, 0XB800        	;显存位置
   MOV ES, AX
 
-  mov byte [ES: 0X00], 'X'
+  mov byte [ES: 0X00], 'K'
   mov byte [ES: 0X01], 0x07
-  ;mov byte [ES: 0X02], 'S'
+  ;mov byte [ES: 0X02], 'L'
   ;mov byte [ES: 0X03], 0X41
   ret 
   
