@@ -1,7 +1,7 @@
 ;将loader放入0x900
 
 LOADER_BASE_ADDR	equ 0x900
-LOADER_START_SECTOR	equ 0x2	;表示已LBA方式，我们的loader存在第2块扇区
+LOADER_START_SECTOR	equ 0x2	; 表示已LBA方式，我们的loader存在第2块扇区
 
 SECTION MBR vstart=0x7c00
 	mov ax,cs
@@ -43,9 +43,9 @@ SECTION MBR vstart=0x7c00
 	mov byte [gs:0x08], 'R'
 	mov byte [gs:0x09], 0xA4
 	
-	mov eax,LOADER_START_SECTOR ;LBA 读入的扇区
-	mov bx,LOADER_BASE_ADDR		;写入的地址
-	mov cx,1					;等待读入的扇区数
+	mov eax,LOADER_START_SECTOR ; LBA 读入的扇区
+	mov bx,LOADER_BASE_ADDR		  ; 写入的地址
+	mov cx,1					          ; 等待读入的扇区数
 	call rd_disk
 	
 	jmp LOADER_BASE_ADDR		;调到实际的物理内存

@@ -3,7 +3,7 @@ all: Image
 .PHONY=clean run
 
 run: Image
-	@qemu-system-i386 -boot a -fda Image
+	@qemu-system-i386 -hda disk.vhd
 
 boot.bin: boot.asm
 	nasm boot.asm -o boot.bin
@@ -24,9 +24,9 @@ kernel.bin: kernel.elf.bin
 	objcopy -O binary -j .text kernel.elf.bin kernel.bin  
  
 Image: boot.bin loader.bin kernel.bin
-	dd if=boot.bin of=Image bs=512 count=1
-	dd if=loader.bin of=Image bs=512 count=1 seek=2
-	dd if=kernel.bin of=Image bs=512 count=1 seek=9   
+	dd if=boot.bin of=disk.vhd bs=512 count=1
+	dd if=loader.bin of=disk.vhd bs=512 count=1 seek=2
+	dd if=kernel.bin of=disk.vhd bs=512 count=1 seek=9   
 	@echo "Image created"	
 
 

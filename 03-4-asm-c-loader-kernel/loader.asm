@@ -2,25 +2,27 @@ LOADER_BASE_ADDR	equ 0x900
 section loader vstart=LOADER_BASE_ADDR
 
 Kernel_BASE_ADDR	equ 0x1500
-Kernel_START_SECTOR	equ 0x9	;表示已LBA方式，我们的Kernel存在第9块扇区
+Kernel_START_SECTOR	equ 0x9	        ; Kernel存在第9块扇区
 
 ;; display  OK
 mov ax,0xb800 ;指向文本模式的显示缓冲区
 mov es,ax
 
-mov byte [es:0x00],'O'
+mov byte [es:0x00],'L'
 mov byte [es:0x01],0x07
-mov byte [es:0x02],'K'
+mov byte [es:0x02],'D'
 mov byte [es:0x03],0x06
 
 ;; read disk
-mov eax,Kernel_START_SECTOR ;LBA 读入的扇区
-mov bx,Kernel_BASE_ADDR		;写入的地址
-mov cx,1					;等待读入的扇区数
+mov eax,Kernel_START_SECTOR ; LBA 读入的扇区
+mov bx,Kernel_BASE_ADDR		  ; 写入的地址
+mov cx,1					          ; 等待读入的扇区数
 call rd_disk
 
-jmp Kernel_BASE_ADDR		;调到实际的物理内存
+jmp Kernel_BASE_ADDR		     ; jump to kernel 所在物理内存
 
+
+;; LAB 方式读取disk
 rd_disk:
 	;eax LBA的扇区号
 	;bx 数据写入的内存地址
