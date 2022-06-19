@@ -13,7 +13,7 @@ myprint:
 
   mov byte [ES: 0X00], 'X'
   mov byte [ES: 0X01], 0x07
-  mov byte [ES: 0X02], 'S'
-  mov byte [ES: 0X03], 0X41
+  ;mov byte [ES: 0X02], 'S'
+  ;mov byte [ES: 0X03], 0X41
   ret 
   
