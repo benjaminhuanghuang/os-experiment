@@ -7,6 +7,11 @@ run: Image
 	@qemu-system-i386 -hda disk.vhd
 ```
 
+LBA 模式 section 的索引从 1 开始，因此要修改dd的参数
+```
+  dd if=loader.bin of=disk.vhd bs=512 count=1 seek=2
+  dd if=kernel.bin of=disk.vhd bs=512 count=1 seek=9 
+```
 
 ## Link .c and .asm together
 
