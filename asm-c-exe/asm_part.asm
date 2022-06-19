@@ -1,5 +1,4 @@
-EXTERN DISPLAY        	;FROM C
-extern chooseNum  ; from C func
+extern chooseNum        ; from C func
 
 [section .data]
 num1 dd 10
@@ -9,7 +8,6 @@ num2 dd 44
 [section .text]
 global _start
 global myprint
-
 
 _start:
   push num2

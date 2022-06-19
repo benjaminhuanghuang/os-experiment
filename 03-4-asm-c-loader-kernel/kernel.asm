@@ -1,12 +1,13 @@
 extern DISPLAY; from C fun
+
 [BITS 16]
 [section .text]
 global _start
-global myprint
+global _myprint
 
 mov ax,0xb800
 	mov es,ax
-	mov byte [es:0x00], 'X'
+	mov byte [es:0x00], 'K'
 	mov byte [es:0x01],0x07
 	ret
 
@@ -14,9 +15,9 @@ mov ax,0xb800
 _start:
 	call DISPLAY ; asm call c function
 
-myprint:
+_myprint:
 	mov ax,0xb800
 	mov es,ax
-	mov byte [es:0x00], 'A'
+	mov byte [es:0x00], 'Z'
 	mov byte [es:0x01],0x07
 	ret
