@@ -1,6 +1,6 @@
 void MYPRINT();
 
-int DISPLAY(){
+int main(){
 	MYPRINT();
 	while(1){
 	}

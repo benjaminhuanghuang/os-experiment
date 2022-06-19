@@ -11,11 +11,11 @@ boot.bin: boot.asm
 kernel.elf.o: kernel.asm
 	nasm -f elf32 -o kernel.elf.o kernel.asm
 
-kernel.elf: kernel.elf.o
-	ld -T config.ld kernel.elf.o -o kernel.elf
+kernel.elf.bin: kernel.elf.o
+	ld -m elf_i386 -s -Ttext 0x900 kernel.elf.o -o kernel.elf.bin
 
-kernel.bin: kernel.elf
-	objcopy -O binary -j .text kernel.elf kernel.bin  
+kernel.bin: kernel.elf.bin
+	objcopy -O binary -j .text kernel.elf.bin kernel.bin  
 
 Image: boot.bin kernel.bin
 	dd if=boot.bin of=Image bs=512 count=1

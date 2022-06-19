@@ -1,7 +1,8 @@
 OUTPUT_FORMAT(elf32-i386)
-ENTRY(start)
+;OUTPUT_ARCH(i386)
+ENTRY(_start)
 
 SECTIONS {
-  . = 0x900;
+  . = 0x100000;
    .text : { *(.text) } 
 }

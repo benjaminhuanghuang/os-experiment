@@ -2,7 +2,7 @@ EXTERN DISPLAY        	;FROM C
 [BITS 16]
 [SECTION .text]
 
-GLOBAL start
+GLOBAL _start
 GLOBAL MYPRINT
 
 start:
@@ -12,6 +12,7 @@ start:
 MYPRINT:
   MOV AX, 0XB800
   MOV ES, AX
+
   MOV BYTE [ES: 0X00], 'P'
   MOV BYTE [ES: 0X01], 0x24
   MOV BYTE [ES: 0X02], 'K'
