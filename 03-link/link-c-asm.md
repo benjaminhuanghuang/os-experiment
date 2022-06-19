@@ -15,10 +15,20 @@
   readelf -a kernel_c.elf.o
 ```
 
-2. 编译 .asm 文件
-对于.asm 文件，也要生成 elf 格式的obj文件
+2. asm Part
+
+nasm 缺省会生成 bin文件
 ```
-  nasm -f elf32 -o kernel.elf.o kernel.asm
+  nasm kernel-bin.asm -o kernel.bin 
+```
+
+如果想 link asm代码和c代码, nasm 要生成 elf 格式的obj文件
+```
+  nasm -f elf32 kernel.asm -o kernel.elf.o
+```
+
+代码也要做相应改动
+```
 ```
 
 3. 链接 asm 和 c 生成的 obj 文件
