@@ -1,6 +1,7 @@
-void myprint();
+void _myprint();
+
 int DISPLAY(){
-	myprint();
+	_myprint();
 	while(1){
 	}
 }

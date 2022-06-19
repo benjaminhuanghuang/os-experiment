@@ -6,16 +6,16 @@ _start:
   MOV AX, 0XB800        	;显存位置
   MOV ES, AX
 
-  MOV BYTE[ES: 0X00], 'K'
-  MOV BYTE[ES: 0X01], 0x24
-  MOV BYTE[ES: 0X02], 'E'
-  MOV BYTE[ES: 0X03], 0X41
-  MOV BYTE [GS: 0X04], 'R'
-  MOV BYTE [GS: 0X05], 0XA4
-  MOV BYTE [GS: 0X06], 'N'
-  MOV BYTE [GS: 0X07], 0XA4
-  MOV BYTE [GS: 0X08], 'E'
-  MOV BYTE [GS: 0X09], 0XA4
-  MOV BYTE [GS: 0XA], 'L'
-  MOV BYTE [GS: 0XB], 0XA4
+  mov byte [es: 0x00], 'K'
+  mov byte [es: 0x01], 0x24
+  mov byte [es: 0x02], 'E'
+  mov byte [es: 0x03], 0X41
+  mov byte [es: 0x04], 'R'
+  mov byte [es: 0x05], 0XA4
+  mov byte [es: 0x06], 'N'
+  mov byte [es: 0x07], 0XA4
+  mov byte [es: 0x08], 'E'
+  mov byte [es: 0x09], 0XA4
+  mov byte [es: 0xA], 'L'
+  mov byte [es: 0xB], 0XA4
   JMP $

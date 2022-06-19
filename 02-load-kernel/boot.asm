@@ -39,7 +39,7 @@ load_kernel:
   mov ES, AX
   mov BX, 0x900
   mov AH, 0x02    ; read
-  mov AL, 4       ; read 1 sections from the disk
+  mov AL, 1       ; read 1 sections from the disk
   int 0x13
 
   jnc kernel_load_ok  ; check CF
@@ -47,8 +47,6 @@ load_kernel:
 
 kernel_load_ok:
   jmp 0x900    ; execute the kernel
-
-
 
 
 TIMES 510 - ($ - $$) DB 0
