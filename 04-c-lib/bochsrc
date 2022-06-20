@@ -1,0 +1,7 @@
+floppya: 1_44="./Image", status=inserted
+boot: floppy
+
+#display_library: x, options="gui_debug"         # enable GUI debugger
+
+#gdbstub: enabled=1, port=1234
+
