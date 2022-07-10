@@ -7,9 +7,14 @@ https://djh-sudo.github.io/Blog/#/OS/README
 https://github.com/djh-sudo/tiny-OS-kernel
 
 ## Tools: 
-- NASM:  直接生成bin
+- Ubuntu
+
+- NASM
+
 - ld
+
 - dd
+
 - qemu
 
 
