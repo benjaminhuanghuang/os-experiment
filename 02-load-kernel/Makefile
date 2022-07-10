@@ -18,7 +18,7 @@ Image: boot.bin kernel.bin
 
 
 clean: 
-	rm -f *.bin Image
+	rm -f *.bin *.img
 
 
 
