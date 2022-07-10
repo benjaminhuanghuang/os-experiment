@@ -8,8 +8,8 @@ run: Image
 boot.bin: boot.asm
 	nasm boot.asm -o boot.bin
 
-kernel.bin: kernel.asm
-	nasm kernel.asm -o kernel.bin 
+kernel.bin: kernel.asm pm.inc
+	nasm $< -o $@ 
 
 Image: boot.bin kernel.bin
 	dd if=boot.bin of=myos.img bs=512 count=1
