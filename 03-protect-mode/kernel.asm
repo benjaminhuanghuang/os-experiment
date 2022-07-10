@@ -1,6 +1,7 @@
 %include "pm.inc"
 
 org 0x9000
+
 jmp START
 
 [section .gdt]
@@ -8,8 +9,8 @@ jmp START
 ;                           段基址     段界限               属性
 GDT_ENTRY    :  Descriptor    0,       0,                  0
 CODE32_DESC  :  Descriptor    0,       Code32SegLen  - 1,  DA_C + DA_32
-; 在文本模式下的显存的地址范围映射位[0xB8000，0xBFFFF],一屏幕可以显示25行，每行80个字符
-VIDEO_DESC   :  Descriptor    0xB8000, 0x7FFF,             DA_DRW + DA_32
+; 实模式下, 文本模式的显存的地址范围映射为 [0xB8000，0xBFFFF],一屏幕可以显示25行，每行80个字符
+VIDEO_DESC   :  Descriptor    0xB8000, 0x7FFF,             DA_DRW
 ; GDT end
 
 GdtLen    equ   $ - GDT_ENTRY
@@ -91,7 +92,8 @@ showChar:
   je    end
   add   ebx,1
   add   si, 1
-  mov   [gs:edi], ax
+  ;mov   [gs:edi], ax
+  mov byte [gs:160], 'P' 
   jmp   showChar
 
 end: 
