@@ -1,9 +1,11 @@
 org 0x7c00  ;程序加载到0x7c00
 
-;初始化寄存器
-MOV AX, CS
-MOV DS, AX
-MOV ES, AX
+; Init registers
+	mov ax,cs
+	mov ds,ax
+	mov es,ax
+	mov ss,ax
+	mov fs,ax
 
 
 ; 使用 BIOS INT 0x13 读取1个扇区 到 ES:BX
@@ -26,3 +28,12 @@ kernel_load_ok:
 
 TIMES 510 - ($ - $$) DB 0
 DB 0X55, 0XAA
+
+	
+	
+	
+	
+	
+	
+	
+	
