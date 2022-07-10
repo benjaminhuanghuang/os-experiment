@@ -43,11 +43,11 @@ START:
   mov byte [CODE32_DESC + 7], ah
 
 ; initialize GDT pointer struct
-    mov eax, 0
-    mov ax, ds
-    shl eax, 4
-    add eax, GDT_ENTRY
-    mov dword [GdtPtr + 2], eax
+  mov eax, 0
+  mov ax, ds
+  shl eax, 4
+  add eax, GDT_ENTRY
+  mov dword [GdtPtr + 2], eax     ; 把GDT的地址放到GdtPtr + 2的位置
 
 ; 1. Load GDT
   lgdt  [GdtPtr]         ; set register
