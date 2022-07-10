@@ -3,7 +3,7 @@ all: Image
 .PHONY=clean run
 
 run: Image
-	@qemu-system-i386 -boot a -fda Image
+	@qemu-system-i386 -boot a -fda myos.img
 
 boot.bin: boot.asm
 	nasm boot.asm -o boot.bin
