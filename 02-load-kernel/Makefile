@@ -12,8 +12,8 @@ kernel.bin: kernel.asm
 	nasm kernel.asm -o kernel.bin 
 
 Image: boot.bin kernel.bin
-	dd if=boot.bin of=Image bs=512 count=1
-	dd if=kernel.bin of=Image bs=512 count=1 seek=1
+	dd if=boot.bin of=myos.img bs=512 count=1
+	dd if=kernel.bin of=myos.img bs=512 count=1 seek=1
 	@echo "Image created"	
 
 

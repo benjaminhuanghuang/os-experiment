@@ -32,6 +32,7 @@ MOV BYTE [GS: 0X07], 0XA4
 MOV BYTE [GS: 0X08], 'R'
 MOV BYTE [GS: 0X09], 0XA4
 
+; 使用 BIOS INT 0x13 读取1个扇区 到 ES:BX
 load_kernel:
   mov DX, 0       ; DH:head, DL:driver
   mov CX, 2       ; read section 2
