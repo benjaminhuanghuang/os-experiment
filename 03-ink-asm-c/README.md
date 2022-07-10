@@ -1,18 +1,5 @@
 # Link Asm and C code 
 
-## Use LAB 模式读取disk
-LBA 模式 不能用于 floppy disk , 改用 virtual disk 
-```
-run: Image
-	@qemu-system-i386 -hda disk.vhd
-```
-
-LBA 模式 section 的索引从 1 开始，因此要修改dd的参数
-```
-  dd if=loader.bin of=disk.vhd bs=512 count=1 seek=2
-  dd if=kernel.bin of=disk.vhd bs=512 count=1 seek=9 
-```
-
 ## Link .c and .asm together
 
 1. 编译 .c 文件， 生成 32-bit elf 格式的obj文件
@@ -41,7 +28,8 @@ PIE能使程序像共享库一样在主存任何位置装载，这需要将程�
   nasm -f elf32 -o kernel.elf.o kernel.asm
 ```
 
-3. 链接 asm 和 c 生成的 obj 文件
+3. 链接 asm 和 c 生成的 obj 文件 
+Method 1: 用 objcopy 提取 .text 段内容
 ```
   ld -Ttext 0x900 kernel.elf.o kernel_c.elf.o -o kernel.elf
 
@@ -53,10 +41,15 @@ PIE能使程序像共享库一样在主存任何位置装载，这需要将程�
   objdump -D kernel.elf
 ```
 
-4. 提取 .text 段内容
+提取 .text 段内容
 
 ```
-  objcoyp -O binary -j .text kernel.elf kernel.bin 
+  objcopy -O binary -j .text kernel.elf kernel.bin 
+```
+
+Method 2: 用 ld 生成 binary
+```
+ld -m elf_i386 --oformat binary -T kernel.ld  $^ -o $@
 ```
 
 查看结果 

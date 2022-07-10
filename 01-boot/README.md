@@ -1,17 +1,9 @@
+## Create a boot section
 
+User asm file create a 512 bytes bin file, end with 0x55AA,
 
+BIOS will load it to 0x7C00 and run it
 
-## Create virtual disk
-```
-diskpart
-
-diskpart> ceate vdisk file=dis.vhd maximum=10 type=fixed
-```
-
-## copy boot.bin to virtual disk
-```
-  dd if=boot.bin of=disk.vhd bs=512 count=1
-```
 
 
 ## check file
