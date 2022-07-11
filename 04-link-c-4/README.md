@@ -12,7 +12,7 @@
 
 链接多个 obj 文件, 指定代码加载地址为 0x0, 同时指定输出格式为 binary, 直接生成kernel_c.bin
 
-asmheader.asm 编译成 binary 格式的kernel_asm.bin 文件
+asmheader.asm 中指定代码加载地址0x90000 编译成 binary 格式的kernel_asm.bin 文件
 
 把两部分直接拼接成最终的 kernel.bin
 
