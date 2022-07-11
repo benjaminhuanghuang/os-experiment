@@ -1,12 +1,21 @@
 # Link Asm and C code - Method 2: link + extract
+最终的kernel.bin 由3部分代码组成
+1. asmheader.asm 是整个内核的入口, 负责初始化GDT, 然后跳转到 32位的代码空间
+2. 若干个 asm 代码文件, 包含硬件操作, 比如IO操作
+3. 若干个 c 代码文件, 
 
 把 kernel 的c语言部分(多个.c文件) 编译成 32-bit elf 格式的.obj 文件, 
 
-把kernel.asm 也编译成 32-bit elf 格式的.obj 文件
+把所有的 asm 代码, 包括 asmheader.asm 全都编译成 32-bit elf 格式的.obj 文件
+
+此时的 asmheader.asm 不用 org 指令指定代码的加载地址, 这个工作交给 ld 来做
 
 链接 asm 生成的 obj文件 和 c 生成的 obj 文件, 通过链接器参数 或 链接脚本 指定 代码的起始地址, 生成一个包含elf文件信息的kernel.bin
 
 最后把kernel.bin中的有用部分, 比如代码, 数据, 堆栈, 提取出来
+
+## 问题
+这个方法的缺点是
 
 
 ## Link .c and .asm together

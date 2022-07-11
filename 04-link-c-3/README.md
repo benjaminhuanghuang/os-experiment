@@ -6,9 +6,15 @@
 
 把 kernel 的c语言部分(多个.c文件) 编译成 32-bit elf 格式的.obj 文件, 
 
-把 asmheader.asm 也编译成 32-bit elf 格式的.obj 文件
+把所有的 asm 代码, 包括 asmheader.asm 全都编译成 32-bit elf 格式的.obj 文件
+
+此时的 asmheader.asm 不用 org 指令指定代码的加载地址, 这个工作交给 ld 来做
 
 链接 asm 生成的 obj文件 和 c 生成的 obj 文件, 通过链接器参数 或 链接脚本 指定 代码的起始地址, 同时指定输出格式为 binary, 直接生成kernel.bin
+
+## 问题
+这个方法的缺点是
+
 
 ## Link .c and .asm together
 

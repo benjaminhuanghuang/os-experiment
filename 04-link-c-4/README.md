@@ -14,6 +14,8 @@ asmheader.asm 编译成 binary 格式的kernel_asm.bin 文件
 把两部分直接拼接成最终的 kernel.bin
 
 
+## 问题: 
+在asmheader.asm要给32bit 代码段 设置 GDT, 而 c 代码是拼接时才和asmheader.asm拼接在一起的, 如何知道代码段的大小?
 
 1. 把 .c 代码编译 32-bit elf 格式的obj文件
 ```
