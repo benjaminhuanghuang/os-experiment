@@ -1,5 +1,5 @@
 
-int draw(){
+void draw(){
 	unsigned char *p = (unsigned char *) 0xa0000;
 
 	for (int i = 0; i <= 0xffff; i++) {

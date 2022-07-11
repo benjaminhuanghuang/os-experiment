@@ -1,4 +1,10 @@
-# Link Asm and C code 
+# Link Asm and C code - Method 3: link 生成 bin 文件
+
+把 kernel 的c语言部分(多个.c文件) 编译成 32-bit elf 格式的.obj 文件, 
+
+把kernel.asm 也编译成 32-bit elf 格式的.obj 文件
+
+链接 asm 生成的 obj文件 和 c 生成的 obj 文件, 通过链接器参数 或 链接脚本 指定 代码的起始地址, 同时指定输出格式为 binary, 直接生成kernel.bin
 
 ## Link .c and .asm together
 
@@ -29,25 +35,8 @@ PIE能使程序像共享库一样在主存任何位置装载，这需要将程�
 ```
 
 3. 链接 asm 和 c 生成的 obj 文件 
-Method 1: 用 objcopy 提取 .text 段内容
-```
-  ld -Ttext 0x900 kernel.elf.o kernel_c.elf.o -o kernel.elf
 
-  0x900 为入口地址
-```
-
-查看链接结果 kernel.elf
-```
-  objdump -D kernel.elf
-```
-
-提取 .text 段内容
-
-```
-  objcopy -O binary -j .text kernel.elf kernel.bin 
-```
-
-Method 2: 用 ld 生成 binary
+用 ld 生成 binary
 ```
 ld -m elf_i386 --oformat binary -T kernel.ld  $^ -o $@
 ```
