@@ -13,7 +13,7 @@ boot.bin: boot.asm
 
 # asmhead.bin to bin
 asmhead.bin: asmhead.asm
-	$(ASM) -f bin $< -o $@
+	nasm -f bin $< -o $@
 
 # asm to elf-32 obj
 %.o: %.asm 

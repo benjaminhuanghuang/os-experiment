@@ -34,7 +34,7 @@ START:
   mov   ss, ax
 
 ; 打开 VGA 模式
-  mov al, 0x13h   ; 320*200*8 调色板 模式, 显存地址 0xa0000
+  mov al, 0x13   ; 320*200*8 调色板 模式, 显存地址 0xa0000
   mov ah, 0
   int 0x10
 
@@ -95,24 +95,7 @@ CODE32_SEGMENT:
   mov  ax, SelectorVRAM
   mov  ds, ax
 
-  mov   si, msg  
-  mov   ebx, 10  
-  mov   ecx, 2
 
-showChar:
-  mov   edi, (80*11)  ;  屏幕第11行
-  add   edi, ebx
-  mov   eax, edi
-  mul   ecx
-  mov   edi, eax
-  mov   ah, 0x0c       ; 字符属性 0000 黑底, 1100: 红字 
-  mov   al, [si]
-  cmp   al, 0          ; 检查字符串结尾  \0
-  je    end
-  add   ebx,1
-  add   si, 1
-  mov   [gs:edi], ax
-  jmp   showChar
 C_CODE:
   
 hlt: 
@@ -125,7 +108,7 @@ Code32SegLen   equ  $ - CODE32_SEGMENT
 
 [SECTION .gs ]
 ALIGN 32
-[BIT 32]
+[BITS 32]
 LABEL_STACK:
   times 512 db 0
   TopOfStack equ $ - LABEL_STACK
