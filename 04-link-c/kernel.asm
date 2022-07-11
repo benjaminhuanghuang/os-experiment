@@ -8,9 +8,10 @@ jmp START
 ;                           段基址     段界限               属性
 GDT_ENTRY    :  Descriptor    0,       0,                  0
 CODE32_DESC  :  Descriptor    0,       Code32SegLen  - 1,  DA_C + DA_32
-; 实模式下, 文本模式的显存的地址范围映射为 [0xB8000，0xBFFFF],一屏幕可以显示25行，每行80个字符
-VIDEO_DESC   :  Descriptor    0xB8000, 0x7FFF,             DA_DRW
-MEM_DESC     :  Descriptor    0x500000, 0xFFFF,            DA_DRW
+; 显存地址 0xa0000
+VRAM_DESC    :  Descriptor    0xa0000,  0xFFFF,            DA_DRW
+; Stack for C language
+STACK_DESC   :  Descriptor    0,       TopOfStack,         DA_DRWA + DA_32
 
 ; GDT end
 
@@ -19,12 +20,10 @@ GdtPtr:
   dw   GdtLen - 1
   dd   0  
 
-; offset of the code32 selector
+; offset of the selectors
 SelectorCode32  equ   CODE32_DESC -  GDT_ENTRY
-; offset of the vido selector
-SelectorVideo   equ   VIDEO_DESC  -  GDT_ENTRY
-; offset of the 5M mem selector
-Selector5M      equ   MEM_DESC  -  GDT_ENTRY
+SelectorVRAM    equ   VRAM_DESC  -  GDT_ENTRY
+SelectorStack   equ   STACK_DESC  -  GDT_ENTRY
 
 [section .s16]
 [BITS  16]
@@ -33,6 +32,11 @@ START:
   mov   ds, ax
   mov   es, ax
   mov   ss, ax
+
+; 打开 VGA 模式
+  mov al, 0x13h   ; 320*200*8 调色板 模式, 显存地址 0xa0000
+  mov ah, 0
+  int 0x10
 
 ; initialize GDT for 32 bits code segment
   mov eax, 0
@@ -43,6 +47,19 @@ START:
   shr eax, 16
   mov byte [CODE32_DESC + 4], al
   mov byte [CODE32_DESC + 7], ah
+
+
+; initialize Stack for C language
+  mov eax, 0
+  mov ax, cs
+  shl eax, 4
+  add eax, LABEL_STACK
+  mov word [STACK_DESC + 2], ax
+  shr eax, 16
+  mov byte [STACK_DESC + 4], al
+  mov byte [STACK_DESC + 7], ah
+
+
 
 ; initialize GDT pointer struct
   mov eax, 0
@@ -73,8 +90,10 @@ START:
 [SECTION .s32]
 [BITS  32]
 CODE32_SEGMENT:
-  mov   ax, SelectorVideo
-  mov   gs, ax   ; 此时段寄存器gs的内容是 段描述符在 GDT 的偏移
+  mov   esp, TopOfStack
+
+  mov  ax, SelectorVRAM
+  mov  ds, ax
 
   mov   si, msg  
   mov   ebx, 10  
@@ -94,11 +113,23 @@ showChar:
   add   si, 1
   mov   [gs:edi], ax
   jmp   showChar
+C_CODE:
+  
+hlt: 
+  hlt
+  ret
 
-end: 
-    jmp   $
-msg:
-    DB     "Protect Mode!!!", 0
 
 Code32SegLen   equ  $ - CODE32_SEGMENT
+
+
+[SECTION .gs ]
+ALIGN 32
+[BIT 32]
+LABEL_STACK:
+  times 512 db 0
+  TopOfStack equ $ - LABEL_STACK
+
+
+
 
