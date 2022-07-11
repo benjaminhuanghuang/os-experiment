@@ -80,12 +80,12 @@ CODE32_SEGMENT:
   mov   ax, Selector5M  ; es 指向5M内存段描述符
   mov   es, ax
   mov   edi, 0
-  
+
 write_msg_to_5M:
-  cmp byte [si], 0
+  cmp byte [si], 0      ; 检查字符串结尾  \0
   je prepare_to_show_char
   mov al, [si]
-  mov [es:edi], al     ; write memory
+  mov [es:edi], al      ; write memory
   add edi, 1
   add si, 1
   jmp write_msg_to_5M
@@ -96,14 +96,14 @@ prepare_to_show_char:
   mov   si, 0
 
 showChar:
-  mov   edi, (80*11)  ;  屏幕第11行
+  mov   edi, (80*11)    ;  屏幕第11行
   add   edi, ebx
   mov   eax, edi
   mul   ecx
   mov   edi, eax
-  mov   ah, 0x0c       ; 字符属性 0000 黑底, 1100: 红字 
-  mov   al, [es:si]    ; read 5M memory
-  cmp   al, 0          ; 检查字符串结尾  \0
+  mov   ah, 0x0c        ; 字符属性 0000 黑底, 1100: 红字 
+  mov   al, [es:si]     ; read 5M memory
+  cmp   al, 0           ; 检查字符串结尾  \0
   je    end
   add   ebx,1
   add   si, 1
