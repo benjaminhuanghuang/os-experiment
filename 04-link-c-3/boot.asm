@@ -20,7 +20,7 @@ load_kernel:
   int 0x13
 
   jnc kernel_load_ok  ; check CF
-  jmp load_kernel
+  jmp 0x9000
 
 kernel_load_ok:
   jmp 0x9000    ; execute the kernel

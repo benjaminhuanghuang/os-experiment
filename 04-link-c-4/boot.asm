@@ -16,7 +16,7 @@ load_kernel:
   mov ES, AX
   mov BX, 0x9000
   mov AH, 0x02    ; read
-  mov AL, 2       ; read 1 sections from the disk
+  mov AL, 2       ; read 2 sections from the disk
   int 0x13
 
   jnc kernel_load_ok  ; check CF
