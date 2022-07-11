@@ -1,38 +1,14 @@
 %include "pm.inc"
 
-
-; GDT definition
-;                           段基址     段界限       属性
-GDT_ENTRY    :  Descriptor    0,       0,         0
-CODE32_DESC  :  Descriptor    0,       0xFFFF,    DA_C + DA_32
-; 显存地址 0xa0000
-VRAM_DESC    :  Descriptor    0xa0000,  0xFFFF,   DA_DRW
-; GDT end
-
-GdtLen    equ   $ - GDT_ENTRY
-GdtPtr:
-  dw   GdtLen - 1
-  dd   0  
-
 ; offset of the selectors
 SelectorCode32  equ   CODE32_DESC -  GDT_ENTRY
 SelectorVRAM    equ   VRAM_DESC  -  GDT_ENTRY
 
 
-[section .s16]
-[BITS  16]
+[SECTION .text]
+[BITS 16]
 START:
-
-	mov ax,0xb800
-	mov es,ax
-	mov byte [es: 0x00], 'K'
-  mov byte [es: 0x01], 0x24
-  mov byte [es: 0x02], 'E'
-  mov byte [es: 0x03], 0X41
-  jmp $
-
-
-  mov   ax, cs
+  mov   ax, 0
   mov   ds, ax
   mov   es, ax
   mov   ss, ax
@@ -79,12 +55,27 @@ START:
   jmp   dword  SelectorCode32: 0      ; SelectorCode32 is the offset of code 32 selector
 
 
+[SECTION .data]
+[BITS  16]
+  ; GDT definition
+  ;                           段基址     段界限               属性
+  GDT_ENTRY    :  Descriptor    0,       0,                  0
+  CODE32_DESC  :  Descriptor    0,       0xFFFF,  DA_C + DA_32
+  ; 显存地址 0xa0000
+  VRAM_DESC    :  Descriptor    0xa0000, 0xFFFF,            DA_DRW
 
-[SECTION .s32]
+  ; GDT end
+
+  GdtLen    equ   $ - GDT_ENTRY
+  GdtPtr:
+    dw   GdtLen - 1
+    dd   0  
+
+[SECTION .text]
 [BITS  32]
 CODE32_SEGMENT:
-;Code32SegLen   equ  $ - CODE32_SEGMENT
-
+; Code32SegLen   equ  $ - CODE32_SEGMENT
+; Append other parts
 
 
 

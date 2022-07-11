@@ -1,5 +1,5 @@
 # Kernel Objects, the order matters!
-OBJS:= asmhead.o #kernel_c.o asmfunc.o
+OBJS:= asmhead.o kernel_c.o asmfunc.o
 
 all: Image
 
@@ -7,6 +7,9 @@ all: Image
 
 run: Image
 	@qemu-system-i386 -boot a -fda myos.img
+
+debug: Image
+	qemu-system-i386 -fda myos.img -boot a -s -S
 
 boot.bin: boot.asm
 	nasm boot.asm -o boot.bin
