@@ -1,3 +1,7 @@
+进入保护模式
+读写 5M 以上空间
+
+
 ## Real mode to Protect mode
 1. 定义GDT
 GDT 至少包含3个描述符
@@ -22,11 +26,6 @@ GDT 至少包含3个描述符
 
 ## 32 Address
 段地址 -> Segment Descriptor -> Base Address -> (Privilege Check) BaseAddr + Offset
-
-## GDT & 
-
-
-## IDT  
 
 
 ## reference

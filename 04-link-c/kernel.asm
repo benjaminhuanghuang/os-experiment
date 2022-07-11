@@ -1,6 +1,5 @@
 %include "pm.inc"
 
-org 0x9000
 
 jmp START
 
@@ -11,18 +10,21 @@ GDT_ENTRY    :  Descriptor    0,       0,                  0
 CODE32_DESC  :  Descriptor    0,       Code32SegLen  - 1,  DA_C + DA_32
 ; 实模式下, 文本模式的显存的地址范围映射为 [0xB8000，0xBFFFF],一屏幕可以显示25行，每行80个字符
 VIDEO_DESC   :  Descriptor    0xB8000, 0x7FFF,             DA_DRW
+MEM_DESC     :  Descriptor    0x500000, 0xFFFF,            DA_DRW
+
 ; GDT end
 
 GdtLen    equ   $ - GDT_ENTRY
 GdtPtr:
   dw   GdtLen - 1
-  dd   0
+  dd   0  
 
 ; offset of the code32 selector
-SelectorCode32    equ   CODE32_DESC -  GDT_ENTRY
+SelectorCode32  equ   CODE32_DESC -  GDT_ENTRY
 ; offset of the vido selector
-SelectorVideo     equ   VIDEO_DESC  -  GDT_ENTRY
-
+SelectorVideo   equ   VIDEO_DESC  -  GDT_ENTRY
+; offset of the 5M mem selector
+Selector5M      equ   MEM_DESC  -  GDT_ENTRY
 
 [section .s16]
 [BITS  16]

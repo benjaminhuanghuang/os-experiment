@@ -11,6 +11,7 @@ GDT_ENTRY    :  Descriptor    0,       0,                  0
 CODE32_DESC  :  Descriptor    0,       Code32SegLen  - 1,  DA_C + DA_32
 ; 实模式下, 文本模式的显存的地址范围映射为 [0xB8000，0xBFFFF],一屏幕可以显示25行，每行80个字符
 VIDEO_DESC   :  Descriptor    0xB8000, 0x7FFF,             DA_DRW
+MEM_DESC     :  Descriptor    0x500000, 0xFFFF,            DA_DRW
 ; GDT end
 
 GdtLen    equ   $ - GDT_ENTRY
@@ -22,7 +23,8 @@ GdtPtr:
 SelectorCode32    equ   CODE32_DESC -  GDT_ENTRY
 ; offset of the vido selector
 SelectorVideo     equ   VIDEO_DESC  -  GDT_ENTRY
-
+; offset of the 5M mem selector
+Selector5M      equ   MEM_DESC  -  GDT_ENTRY
 
 [section .s16]
 [BITS  16]
@@ -75,8 +77,23 @@ CODE32_SEGMENT:
   mov   gs, ax   ; 此时段寄存器gs的内容是 段描述符在 GDT 的偏移
 
   mov   si, msg  
+  mov   ax, Selector5M  ; es 指向5M内存段描述符
+  mov   es, ax
+  mov   edi, 0
+  
+write_msg_to_5M:
+  cmp byte [si], 0
+  je prepare_to_show_char
+  mov al, [si]
+  mov [es:edi], al     ; write memory
+  add edi, 1
+  add si, 1
+  jmp write_msg_to_5M
+  
+prepare_to_show_char:  
   mov   ebx, 10  
   mov   ecx, 2
+  mov   si, 0
 
 showChar:
   mov   edi, (80*11)  ;  屏幕第11行
@@ -85,7 +102,7 @@ showChar:
   mul   ecx
   mov   edi, eax
   mov   ah, 0x0c       ; 字符属性 0000 黑底, 1100: 红字 
-  mov   al, [si]
+  mov   al, [es:si]    ; read 5M memory
   cmp   al, 0          ; 检查字符串结尾  \0
   je    end
   add   ebx,1
@@ -96,7 +113,7 @@ showChar:
 end: 
     jmp   $
 msg:
-    DB     "Protect Mode!!!", 0
+    DB     "Protect Mode!!! 5M", 0
 
 Code32SegLen   equ  $ - CODE32_SEGMENT
 
