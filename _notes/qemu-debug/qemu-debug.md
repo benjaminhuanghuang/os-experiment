@@ -17,7 +17,9 @@
 
 在另一个终端调用gdb 通过 qemu 进行 debug
 ```
-(gdb) target remote localhost:1234
+$ gdb
+
+(gdb) target remote localhost:1234    # connect to qemu
 
 (gdb) file boot
 
