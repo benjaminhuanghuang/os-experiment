@@ -8,14 +8,18 @@ run: Image
 boot.bin: boot.asm
 	nasm boot.asm -o boot.bin
 
-kernel.elf.o: kernel.asm
-	nasm -f elf32 -o kernel.elf.o kernel.asm
+kernel.o: kernel.asm
+	nasm kernel.asm -o kernel.bin
 
-kernel_c.elf.o: kernel_c.c
-	gcc -m32 -fno-pie -o kernel_c.elf.o -c kernel_c.c
+%.o: %.c
+	gcc -fno-pie -m32 -c $< -o $@
 
-kernel.bin: kernel_c.elf.o kernel.elf.o
-	ld -m elf_i386 --oformat binary -T kernel.ld  $^ -o $@
+kernel_c.bin: kernel_c.o
+	ld -m elf_i386 --oformat binary -T bootpack.ld $^ -o $@
+
+kernel.bin: kernel_c.bin asmhead.bin
+	cat asmhead.bin > kernel.bin
+	cat kernel_c.bin >> kernel.bin
  
 Image: boot.bin kernel.bin
 	dd if=/dev/zero of=myos.img bs=512 count=2880
@@ -26,7 +30,7 @@ Image: boot.bin kernel.bin
 
 
 clean: 
-	rm -f *.bin *.o *.elf Image
+	rm -f *.bin *.o *.elf *.img
 
 
 
