@@ -31,7 +31,6 @@ START:
   mov   ds, ax
   mov   es, ax
   mov   ss, ax
-  mov sp, 0x900
 
 ; initialize GDT for 32 bits code segment
   mov eax, 0
@@ -63,7 +62,6 @@ START:
 
 ; 4. Set CR0 register
   mov   eax, cr0
-  and		eax, 0x7fffffff	; 使用bit31（禁用分页）
   or    eax , 1         ; set PE
   mov   cr0, eax
 
@@ -92,14 +90,13 @@ showChar:
   je    end
   add   ebx,1
   add   si, 1
-  ;mov   [gs:edi], ax
-  mov byte [gs:160], 'P' 
+  mov   [gs:edi], ax
   jmp   showChar
 
 end: 
     jmp   $
 msg:
-    DB     "Protect Mode", 0
+    DB     "Protect Mode!!!", 0
 
 Code32SegLen   equ  $ - CODE32_SEGMENT
 
