@@ -1,3 +1,6 @@
+# Kernel Objects, the order matters!
+OBJS:=  kernel_c.o asmfunc.o
+
 all: Image
 
 .PHONY=clean run
@@ -8,14 +11,20 @@ run: Image
 boot.bin: boot.asm
 	nasm boot.asm -o boot.bin
 
-kernel.o: kernel.asm
-	nasm kernel.asm -o kernel.bin
+# asmhead.bin to bin
+asmhead.bin: asmhead.asm
+	$(ASM) -f bin $< -o $@
 
+# asm to elf-32 obj
+%.o: %.asm 
+	nasm -f elf32 $< -o $@
+# c to elf-32 obj
 %.o: %.c
-	gcc -fno-pie -m32 -c $< -o $@
+	gcc -m32 -fno-pie -c $< -o $@
 
-kernel_c.bin: kernel_c.o
-	ld -m elf_i386 --oformat binary -T bootpack.ld $^ -o $@
+# link asm objs and c objs
+kernel_c.bin: ${OBJS}
+	ld -m elf_i386 --oformat binary -T kernel.ld $^ -o $@
 
 kernel.bin: kernel_c.bin asmhead.bin
 	cat asmhead.bin > kernel.bin

@@ -1,8 +1,12 @@
 # Link Asm and C code - Method 3: link 生成 bin 文件
+最终的kernel.bin 由3部分代码组成
+1. asmheader.asm 是整个内核的入口, 负责初始化GDT, 然后跳转到 32位的代码空间
+2. 若干个 asm 代码文件, 包含硬件操作, 比如IO操作
+3. 若干个 c 代码文件, 
 
 把 kernel 的c语言部分(多个.c文件) 编译成 32-bit elf 格式的.obj 文件, 
 
-把kernel.asm 也编译成 32-bit elf 格式的.obj 文件
+把 asmheader.asm 也编译成 32-bit elf 格式的.obj 文件
 
 链接 asm 生成的 obj文件 和 c 生成的 obj 文件, 通过链接器参数 或 链接脚本 指定 代码的起始地址, 同时指定输出格式为 binary, 直接生成kernel.bin
 
