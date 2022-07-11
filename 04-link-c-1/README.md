@@ -2,6 +2,8 @@
 
 参考 https://www.bilibili.com/video/BV1hJ411n7rs?p=8&vd_source=b7025abbc1efd8b7631e43fa506ade3a
 
+因为引入C语言, kernel.bin 的大小会超过 512 bytes, 需要修改 Makefile 中生成myos.img 和 boot.asm 中加载kernel 的相应部分
+
 最终的kernel.bin 由3部分代码组成
 1. asmheader.asm 是整个内核的入口, 负责初始化GDT, 然后跳转到 32位的代码空间
 2. 若干个 asm 代码文件, 包含硬件操作, 比如IO操作

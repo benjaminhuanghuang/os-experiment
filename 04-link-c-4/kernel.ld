@@ -1,8 +1,30 @@
-OUTPUT_FORMAT(elf32-i386)
-OUTPUT_ARCH(i386)
+MEMORY
+{
+  rom : ORIGIN = 0x000000, LENGTH = 0x280000
+  ram : ORIGIN = 0x280000, LENGTH = 0x020000
+}
 
-SECTIONS {
-  .text 0x9000: {
-    *(.text)
-  } 
+SECTIONS
+{
+  . = 0x0000;
+  .text :
+  {
+    *(.text.main);
+    *(.text);
+  } > rom AT > ram
+
+  .rodata :
+  {
+    *(.rodata)
+  } > ram
+
+  .data : 
+  {
+    *(.data)
+  } > ram
+
+  .bss : 
+  {
+    *(.bss)
+  } > ram
 }

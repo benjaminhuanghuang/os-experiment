@@ -87,6 +87,15 @@ START:
 ; 5. Jump to 32bit code space
   jmp   dword  SelectorCode32: 0      ; SelectorCode32 is the offset of code 32 selector
 
+
+[SECTION .gs ]
+ALIGN 32
+[BITS 32]
+LABEL_STACK:
+  times 512 db 0
+  TopOfStack equ $ - LABEL_STACK
+
+
 [SECTION .s32]
 [BITS  32]
 CODE32_SEGMENT:
@@ -96,22 +105,8 @@ CODE32_SEGMENT:
   mov  ds, ax
 
 
-C_CODE:
-  
-hlt: 
-  hlt
-  ret
+Code32SegLen   equ  0xffff
 
-
-Code32SegLen   equ  $ - CODE32_SEGMENT
-
-
-[SECTION .gs ]
-ALIGN 32
-[BITS 32]
-LABEL_STACK:
-  times 512 db 0
-  TopOfStack equ $ - LABEL_STACK
 
 
 

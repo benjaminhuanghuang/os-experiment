@@ -33,7 +33,7 @@ kernel.bin: kernel_c.bin asmhead.bin
 Image: boot.bin kernel.bin
 	dd if=/dev/zero of=myos.img bs=512 count=2880
 	dd if=boot.bin of=myos.img bs=512 count=1 conv=notrunc
-	dd if=kernel.bin of=myos.img seek=1 bs=512 count=1 conv=notrunc
+	dd if=kernel.bin of=myos.img seek=1 bs=512 count=2 conv=notrunc
 
 	@echo "Image created"	
 
