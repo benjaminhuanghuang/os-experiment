@@ -1,4 +1,5 @@
 # Link Asm and C code - Method 4: 文件拼接
+
 因为引入C语言, kernel.bin 的大小会超过512bytes, 需要修改Makefile 中生成myos.img 和 boot.asm 中加载kernel 的相应部分
 
 最终的kernel.bin 由3部分代码组成
@@ -17,7 +18,8 @@ asmheader.asm 编译成 binary 格式的kernel_asm.bin 文件
 
 
 ## 问题: 
-在asmheader.asm要给32bit 代码段 设置 GDT, 而 c 代码是拼接时才和asmheader.asm拼接在一起的, 如何知道代码段的大小?
+在asmheader.asm要给32bit 代码段 设置 GDT, 而 c 代码是拼接时才和asmheader.asm拼接在一起的, 如何知道代码段的大小? 
+目前只好把 代码段界限写成 0xFFFF
 
 1. 把 .c 代码编译 32-bit elf 格式的obj文件
 ```
